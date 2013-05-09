@@ -25,6 +25,9 @@
 #include <kernel/api.h>
 #include <gr_sync_block.h>
 
+#include <libv4l2.h>
+#include <fcntl.h>
+
 namespace gr {
   namespace kernel {
 

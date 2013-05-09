@@ -86,6 +86,7 @@ set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
 find_package(Gruel)
 find_package(GnuradioCore)
 find_package(CppUnit)
+find_package(V4L2)
 
 if(NOT GRUEL_FOUND)
     message(FATAL_ERROR "Gruel required to compile kernel")
@@ -97,6 +98,10 @@ endif()
 
 if(NOT CPPUNIT_FOUND)
     message(FATAL_ERROR "CppUnit required to compile kernel")
+endif()
+
+if(NOT V4L2_FOUND)
+    message(FATAL_ERROR "libv4l2 required to compile kernel")
 endif()
 
 ########################################################################
@@ -120,6 +125,9 @@ link_directories(
 # Set component parameters
 set(GR_KERNEL_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
 set(GR_KERNEL_SWIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/swig CACHE INTERNAL "" FORCE)
+
+# TODO: why this is needed?
+set(CMAKE_CXX_FLAGS "-lv4l2")
 
 ########################################################################
 # Create uninstall target

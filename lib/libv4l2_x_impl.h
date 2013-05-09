@@ -29,7 +29,8 @@ namespace gr {
     class libv4l2_x_impl : public libv4l2_x
     {
     private:
-      // Nothing to declare in this block.
+      // v4l2 device file handle
+      int fd;
 
     public:
       libv4l2_x_impl();

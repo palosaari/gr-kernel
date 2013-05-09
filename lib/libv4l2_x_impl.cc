@@ -39,29 +39,45 @@ namespace gr {
      */
     libv4l2_x_impl::libv4l2_x_impl()
       : gr_sync_block("libv4l2_x",
-		      gr_make_io_signature(0, 0, 0),
-		      gr_make_io_signature(<+MIN_IN+>, <+MAX_IN+>, sizeof (<+float+>)))
-    {}
+              gr_make_io_signature(0, 0, 0),
+              gr_make_io_signature(1, 1, sizeof (gr_complex)))
+    {
+        const char *name = "/dev/video0";
+
+        fd = v4l2_open(name, O_RDWR | O_NONBLOCK, 0);
+        if (fd < 0) {
+            perror(name);
+            throw std::runtime_error("can't open file");
+        }
+    }
 
     /*
      * Our virtual destructor.
      */
     libv4l2_x_impl::~libv4l2_x_impl()
     {
+        if (fd > 0)
+            v4l2_close(fd);
     }
 
     int
     libv4l2_x_impl::work(int noutput_items,
-			  gr_vector_const_void_star &input_items,
-			  gr_vector_void_star &output_items)
+              gr_vector_const_void_star &input_items,
+              gr_vector_void_star &output_items)
     {
-        const float *in = (const float *) input_items[0];
-        float *out = (float *) output_items[0];
+        gr_complex *out = (gr_complex *) output_items[0];
+        int ret, errors = 0, i;
 
-        // Do <+signal processing+>
+        // Read data from device
+        ret = v4l2_read(fd, out, noutput_items * sizeof (gr_complex));
 
         // Tell runtime system how many output items we produced.
-        return noutput_items;
+        if (ret > 0)
+            ret = ret / sizeof (gr_complex);
+        else
+            ret = 0;
+
+        return ret;
     }
 
   } /* namespace kernel */
