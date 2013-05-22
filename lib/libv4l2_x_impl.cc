@@ -58,6 +58,21 @@ namespace gr {
             v4l2_close(fd);
     }
 
+    void
+    libv4l2_x_impl::set_center_freq(double freq)
+    {
+        struct v4l2_frequency frequency;
+
+        memset (&frequency, 0, sizeof(frequency));
+        frequency.type = V4L2_TUNER_ANALOG_TV;
+        frequency.frequency = freq / 62.5;
+
+        if (v4l2_ioctl(fd, VIDIOC_S_FREQUENCY, &frequency) == -1)
+            perror("VIDIOC_S_FREQUENCY");
+
+        return;
+    }
+
     int
     libv4l2_x_impl::work(int noutput_items,
               gr_vector_const_void_star &input_items,

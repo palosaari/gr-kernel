@@ -4,7 +4,10 @@
   <key>kernel_libv4l2_x</key>
   <category>Sources</category>
   <import>import kernel</import>
-  <make>kernel.libv4l2_x($filename)</make>
+  <make>kernel.libv4l2_x($filename)
+self.$(id).set_center_freq($center_freq0)
+  </make>
+  <callback>set_center_freq($center_freq0)</callback>
   <param>
     <name>File</name>
     <key>filename</key>
@@ -42,6 +45,12 @@
       <opt>size:gr.sizeof_char</opt>
     </option>
     -->
+  </param>
+  <param>
+    <name>Ch0: Center Freq (Hz)</name>
+    <key>center_freq0</key>
+    <value>87500000</value>
+    <type>real</type>
   </param>
   <source>
     <name>out</name>

@@ -27,6 +27,7 @@
 
 #include <libv4l2.h>
 #include <fcntl.h>
+#include <linux/videodev2.h>
 
 namespace gr {
   namespace kernel {
@@ -50,6 +51,8 @@ namespace gr {
         * creating new instances.
         */
        static sptr make(const char *filename);
+
+       virtual void set_center_freq(double freq) = 0;
     };
 
   } // namespace kernel

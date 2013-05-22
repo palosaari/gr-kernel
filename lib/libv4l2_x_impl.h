@@ -36,6 +36,8 @@ namespace gr {
       libv4l2_x_impl(const char *filename);
       ~libv4l2_x_impl();
 
+      void set_center_freq(double freq);
+
       // Where all the action really happens
       int work(int noutput_items,
 	       gr_vector_const_void_star &input_items,
