@@ -4,15 +4,13 @@
   <key>kernel_libv4l2_x</key>
   <category>Sources</category>
   <import>import kernel</import>
-  <make>kernel.libv4l2_x()</make>
-  <!--
+  <make>kernel.libv4l2_x($filename)</make>
   <param>
     <name>File</name>
-    <key>file</key>
+    <key>filename</key>
     <value>/dev/video0</value>
     <type>file_open</type>
   </param>
-  -->
   <param>
     <name>Output Type</name>
     <key>type</key>

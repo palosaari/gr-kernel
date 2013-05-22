@@ -49,7 +49,7 @@ namespace gr {
         * class. kernel::libv4l2_x::make is the public interface for
         * creating new instances.
         */
-       static sptr make();
+       static sptr make(const char *filename);
     };
 
   } // namespace kernel

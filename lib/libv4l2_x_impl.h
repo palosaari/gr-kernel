@@ -33,7 +33,7 @@ namespace gr {
       int fd;
 
     public:
-      libv4l2_x_impl();
+      libv4l2_x_impl(const char *filename);
       ~libv4l2_x_impl();
 
       // Where all the action really happens

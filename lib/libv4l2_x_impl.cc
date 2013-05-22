@@ -29,24 +29,22 @@ namespace gr {
   namespace kernel {
 
     libv4l2_x::sptr
-    libv4l2_x::make()
+    libv4l2_x::make(const char *filename)
     {
-      return gnuradio::get_initial_sptr (new libv4l2_x_impl());
+      return gnuradio::get_initial_sptr (new libv4l2_x_impl(filename));
     }
 
     /*
      * The private constructor
      */
-    libv4l2_x_impl::libv4l2_x_impl()
+    libv4l2_x_impl::libv4l2_x_impl(const char *filename)
       : gr_sync_block("libv4l2_x",
               gr_make_io_signature(0, 0, 0),
               gr_make_io_signature(1, 1, sizeof (gr_complex)))
     {
-        const char *name = "/dev/video0";
-
-        fd = v4l2_open(name, O_RDWR | O_NONBLOCK, 0);
+        fd = v4l2_open(filename, O_RDWR | O_NONBLOCK, 0);
         if (fd < 0) {
-            perror(name);
+            perror(filename);
             throw std::runtime_error("can't open file");
         }
     }
