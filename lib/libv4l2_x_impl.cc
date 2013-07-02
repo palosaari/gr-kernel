@@ -59,6 +59,21 @@ namespace gr {
     }
 
     void
+    libv4l2_x_impl::set_samp_rate(double samp_rate)
+    {
+        struct v4l2_control ctrl;
+
+        memset (&ctrl, 0, sizeof(ctrl));
+        ctrl.id = V4L2_CID_RDS_TX_DEVIATION;
+        ctrl.value = samp_rate;
+
+        if (v4l2_ioctl(fd, VIDIOC_S_CTRL, &ctrl) == -1)
+            perror("VIDIOC_S_CTRL");
+
+        return;
+    }
+
+    void
     libv4l2_x_impl::set_center_freq(double freq)
     {
         struct v4l2_frequency frequency;

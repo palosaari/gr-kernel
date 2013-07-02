@@ -52,6 +52,7 @@ namespace gr {
         */
        static sptr make(const char *filename);
 
+       virtual void set_samp_rate(double samp_rate) = 0;
        virtual void set_center_freq(double freq) = 0;
     };
 

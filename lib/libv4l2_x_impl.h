@@ -36,6 +36,7 @@ namespace gr {
       libv4l2_x_impl(const char *filename);
       ~libv4l2_x_impl();
 
+      void set_samp_rate(double samp_rate);
       void set_center_freq(double freq);
 
       // Where all the action really happens
