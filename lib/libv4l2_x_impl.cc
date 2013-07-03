@@ -25,6 +25,14 @@
 #include <gr_io_signature.h>
 #include "libv4l2_x_impl.h"
 
+/* Control classes */
+#define V4L2_CTRL_CLASS_USER    0x00980000 /* Old-style 'user' controls */
+/* User-class control IDs */
+#define V4L2_CID_BASE           (V4L2_CTRL_CLASS_USER | 0x900)
+#define V4L2_CID_USER_BASE      V4L2_CID_BASE
+
+#define CID_SAMPLE_RATE         ((V4L2_CID_USER_BASE | 0xf000) + 0)
+
 namespace gr {
   namespace kernel {
 
@@ -61,14 +69,20 @@ namespace gr {
     void
     libv4l2_x_impl::set_samp_rate(double samp_rate)
     {
-        struct v4l2_control ctrl;
+        struct v4l2_ext_controls ext_ctrls;
+        struct v4l2_ext_control ext_ctrl;
 
-        memset (&ctrl, 0, sizeof(ctrl));
-        ctrl.id = V4L2_CID_RDS_TX_DEVIATION;
-        ctrl.value = samp_rate;
+        memset (&ext_ctrl, 0, sizeof(ext_ctrl));
+        ext_ctrl.id = CID_SAMPLE_RATE;
+        ext_ctrl.value64 = samp_rate;
 
-        if (v4l2_ioctl(fd, VIDIOC_S_CTRL, &ctrl) == -1)
-            perror("VIDIOC_S_CTRL");
+        memset (&ext_ctrls, 0, sizeof(ext_ctrls));
+        ext_ctrls.ctrl_class = V4L2_CTRL_CLASS_USER;
+        ext_ctrls.count = 1;
+        ext_ctrls.controls = &ext_ctrl;
+
+        if (v4l2_ioctl(fd, VIDIOC_S_EXT_CTRLS, &ext_ctrls) == -1)
+            perror("VIDIOC_S_EXT_CTRLS");
 
         return;
     }
