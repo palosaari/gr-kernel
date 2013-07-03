@@ -33,6 +33,7 @@
 
 #define CID_SAMPLE_RATE         ((V4L2_CID_USER_BASE | 0xf000) + 0)
 #define CID_TUNER_BW            ((V4L2_CID_USER_BASE | 0xf000) + 11)
+#define CID_TUNER_GAIN          ((V4L2_CID_USER_BASE | 0xf000) + 13)
 
 namespace gr {
   namespace kernel {
@@ -112,6 +113,27 @@ namespace gr {
         memset (&ext_ctrl, 0, sizeof(ext_ctrl));
         ext_ctrl.id = CID_TUNER_BW;
         ext_ctrl.value = bandwidth;
+
+        memset (&ext_ctrls, 0, sizeof(ext_ctrls));
+        ext_ctrls.ctrl_class = V4L2_CTRL_CLASS_USER;
+        ext_ctrls.count = 1;
+        ext_ctrls.controls = &ext_ctrl;
+
+        if (v4l2_ioctl(fd, VIDIOC_S_EXT_CTRLS, &ext_ctrls) == -1)
+            perror("VIDIOC_S_EXT_CTRLS");
+
+        return;
+    }
+
+    void
+    libv4l2_x_impl::set_tuner_gain(double gain)
+    {
+        struct v4l2_ext_controls ext_ctrls;
+        struct v4l2_ext_control ext_ctrl;
+
+        memset (&ext_ctrl, 0, sizeof(ext_ctrl));
+        ext_ctrl.id = CID_TUNER_GAIN;
+        ext_ctrl.value = gain;
 
         memset (&ext_ctrls, 0, sizeof(ext_ctrls));
         ext_ctrls.ctrl_class = V4L2_CTRL_CLASS_USER;

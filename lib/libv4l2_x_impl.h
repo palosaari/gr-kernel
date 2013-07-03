@@ -39,6 +39,7 @@ namespace gr {
       void set_samp_rate(double samp_rate);
       void set_center_freq(double freq);
       void set_bandwidth(double bandwidth);
+      void set_tuner_gain(double gain);
 
       // Where all the action really happens
       int work(int noutput_items,
