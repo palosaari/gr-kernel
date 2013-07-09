@@ -31,9 +31,13 @@
 #define V4L2_CID_BASE           (V4L2_CTRL_CLASS_USER | 0x900)
 #define V4L2_CID_USER_BASE      V4L2_CID_BASE
 
-#define CID_SAMPLE_RATE         ((V4L2_CID_USER_BASE | 0xf000) + 0)
-#define CID_TUNER_BW            ((V4L2_CID_USER_BASE | 0xf000) + 11)
-#define CID_TUNER_GAIN          ((V4L2_CID_USER_BASE | 0xf000) + 13)
+#define CID_SAMPLING_MODE         ((V4L2_CID_USER_BASE | 0xf000) + 0)
+#define CID_SAMPLING_RATE         ((V4L2_CID_USER_BASE | 0xf000) + 1)
+#define CID_SAMPLING_RESOLUTION   ((V4L2_CID_USER_BASE | 0xf000) + 2)
+#define CID_TUNER_RF              ((V4L2_CID_USER_BASE | 0xf000) + 10)
+#define CID_TUNER_BW              ((V4L2_CID_USER_BASE | 0xf000) + 11)
+#define CID_TUNER_IF              ((V4L2_CID_USER_BASE | 0xf000) + 12)
+#define CID_TUNER_GAIN            ((V4L2_CID_USER_BASE | 0xf000) + 13)
 
 namespace gr {
   namespace kernel {
@@ -75,7 +79,7 @@ namespace gr {
         struct v4l2_ext_control ext_ctrl;
 
         memset (&ext_ctrl, 0, sizeof(ext_ctrl));
-        ext_ctrl.id = CID_SAMPLE_RATE;
+        ext_ctrl.id = CID_SAMPLING_RATE;
         ext_ctrl.value64 = samp_rate;
 
         memset (&ext_ctrls, 0, sizeof(ext_ctrls));
