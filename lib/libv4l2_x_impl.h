@@ -25,12 +25,19 @@
 
 namespace gr {
   namespace kernel {
+    // v4l2_mmap
+    struct buffer {
+      void *start;
+      size_t length;
+    };
 
     class libv4l2_x_impl : public libv4l2_x
     {
     private:
       // v4l2 device file handle
       int fd;
+      struct buffer *buffers;
+      unsigned int n_buffers;
 
     public:
       libv4l2_x_impl(const char *filename);
