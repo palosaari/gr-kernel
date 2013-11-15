@@ -24,37 +24,37 @@
 #include <kernel/libv4l2_x.h>
 
 namespace gr {
-  namespace kernel {
-    // v4l2_mmap
-    struct buffer {
-      void *start;
-      size_t length;
-    };
+	namespace kernel {
+	// v4l2_mmap
+	struct buffer {
+		void *start;
+		size_t length;
+	};
 
-    class libv4l2_x_impl : public libv4l2_x
-    {
-    private:
-      // v4l2 device file handle
-      int fd;
-      struct buffer *buffers;
-      unsigned int n_buffers;
+	class libv4l2_x_impl : public libv4l2_x
+	{
+	private:
+		// v4l2 device file handle
+		int fd;
+		struct buffer *buffers;
+		unsigned int n_buffers;
 
-    public:
-      libv4l2_x_impl(const char *filename);
-      ~libv4l2_x_impl();
+	public:
+		libv4l2_x_impl(const char *filename);
+		~libv4l2_x_impl();
 
-      void set_samp_rate(double samp_rate);
-      void set_center_freq(double freq);
-      void set_bandwidth(double bandwidth);
-      void set_tuner_gain(double gain);
+		void set_samp_rate(double samp_rate);
+		void set_center_freq(double freq);
+		void set_bandwidth(double bandwidth);
+		void set_tuner_gain(double gain);
 
-      // Where all the action really happens
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
-    };
+		// Where all the action really happens
+		int work(int noutput_items,
+				gr_vector_const_void_star &input_items,
+				gr_vector_void_star &output_items);
+	};
 
-  } // namespace kernel
+	} // namespace kernel
 } // namespace gr
 
 #endif /* INCLUDED_KERNEL_LIBV4L2_X_IMPL_H */
