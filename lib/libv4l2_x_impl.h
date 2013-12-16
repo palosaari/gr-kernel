@@ -36,8 +36,17 @@ namespace gr {
 	private:
 		// v4l2 device file handle
 		int fd;
+
+		// stream / sample format
+		uint32_t pixelformat;
+
 		struct buffer *buffers;
 		unsigned int n_buffers;
+
+		// for processing mmap buffer
+		void *recebuf_ptr;
+		unsigned int recebuf_len;
+		unsigned int recebuf_mmap_index;
 
 	public:
 		libv4l2_x_impl(const char *filename);

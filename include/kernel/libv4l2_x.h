@@ -26,6 +26,7 @@
 #include <gr_sync_block.h>
 
 #include <libv4l2.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <linux/videodev2.h>
 
