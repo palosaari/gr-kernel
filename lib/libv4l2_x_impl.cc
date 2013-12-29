@@ -187,7 +187,7 @@ namespace gr {
 		memset (&frequency, 0, sizeof(frequency));
 		frequency.tuner = 1;
 		frequency.type = V4L2_TUNER_RF;
-		frequency.frequency = freq / 62.5;
+		frequency.frequency = freq;
 
 		if (v4l2_ioctl(fd, VIDIOC_S_FREQUENCY, &frequency) == -1)
 			perror("VIDIOC_S_FREQUENCY");
